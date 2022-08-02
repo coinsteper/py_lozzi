@@ -15,6 +15,8 @@ img_x = r'C:\python\image_processing\auto_lozzi\x.png'
 img_x2 = r'C:\python\image_processing\auto_lozzi\x2.png'
 img_x3 = r'C:\python\image_processing\auto_lozzi\x3.png'
 img_x4 = r'C:\python\image_processing\auto_lozzi\x4.png'
+img_x5 = r'C:\python\image_processing\auto_lozzi\x5.png'
+img_x6 = r'C:\python\image_processing\auto_lozzi\x6.png'
 img_close = r'C:\python\image_processing\auto_lozzi\close.png'
 
 #img_new = r'C:\Python3\work\image\new.png'
@@ -32,14 +34,29 @@ img_close = r'C:\python\image_processing\auto_lozzi\close.png'
 
 #print(pg.position())
 
+tvwindow = pg.getWindowsWithTitle('Xiaomi_Mi A1_unknown - TeamViewer')
+left_ = tvwindow[0].left + 100
+top_ = tvwindow[0].top + 100
+width_ = tvwindow[0].width
+height_ = tvwindow[0].height
+
 def find_and_clik(img):
     Flag = False
     confi = 0.9
 
     if img == img_gold_box:
         config = 0.7
+        find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
+        while find_img != None:
+            pg.click(find_img, clicks=1, duration=0.1)
+            find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
+
+        return True
+
+    if img == img_gold_box:
+        config = 0.7
     
-    find_img = pg.locateOnScreen(img, confidence=confi)
+    find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
     time.sleep(0.01)
 
     if find_img != None:
@@ -56,9 +73,8 @@ def find_and_clik(img):
 
 
 if __name__ =='__main__':
-
     try:
-        while True:
+        while True:            
             
             find_and_clik(img_box)
             find_and_clik(img_more_box)
@@ -69,6 +85,8 @@ if __name__ =='__main__':
             find_and_clik(img_x2)
             find_and_clik(img_x3)
             find_and_clik(img_x4)
+            find_and_clik(img_x5)
+            find_and_clik(img_x6)
             find_and_clik(img_close)
 
     except KeyboardInterrupt:
