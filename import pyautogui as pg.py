@@ -5,6 +5,7 @@ from PIL import ImageGrab
 from functools import partial
 import screeninfo
 import time
+import random
 
 img_box = r'C:\python\image_processing\auto_lozzi\box.png'
 img_more_box_g = r'C:\python\image_processing\auto_lozzi\more_box_g.png'
@@ -42,25 +43,23 @@ height_ = tvwindow[0].height
 
 def find_and_clik(img):
     Flag = False
+    b_random_click = False
     confi = 0.9
+    left_random = 0
+    left_top = 0
 
     if img == img_gold_box:
-        config = 0.7
-        find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
-        while find_img != None:
-            pg.click(find_img, clicks=1, duration=0.1)
-            find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
-
-        return True
-
-    if img == img_gold_box:
-        config = 0.7
-    
+        config = 0.7  
+ 
     find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
-    time.sleep(0.01)
-
+    
     if find_img != None:
-        time.sleep(0.05)
+        time.sleep(0.1)
+        
+        if img == img == img_more_box or img == img_more_box_g:
+            find_img = (find_img.left + random.randrange(-5,5), find_img.top + random.randrange(-5,5), find_img.width, find_img.height)
+            time.sleep(0.1)
+        
         pg.click(find_img, clicks=1, duration=0.1)
 
         if img == img_box:
