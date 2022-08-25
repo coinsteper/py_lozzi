@@ -66,7 +66,7 @@ def find_and_click(img, pos=0):
         time.sleep(0.01)
 
         # 더 받기 랜덤한 좌표 클릭해서 봇체크 우회
-        if img == img == img_more_box or img == img_more_box_g:
+        if img == img == img_more_box or img == img_more_box_g or img == img_more_box2:
             find_img = (find_img.left + random.randrange(-5, 5), find_img.top + random.randrange(-5, 5), find_img.width,
                         find_img.height)
             time.sleep(0.01)
@@ -85,6 +85,7 @@ def find_and_click(img, pos=0):
 
         if img == img_box:
             while True:
+                time.sleep(0.05)
                 find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
                 if find_img != None:
                     pg.click(find_img, clicks=1, duration=0.1)
@@ -118,7 +119,7 @@ def make_switch():
     start_time = time.time()
 
     while True:
-        if time.time() - start_time >= 20:
+        if time.time() - start_time >= 5:
             break
 
         time.sleep(0.2)
@@ -127,7 +128,7 @@ def make_switch():
             time.sleep(0.5)
 
             while True:
-                if time.time() - start_time >= 20:
+                if time.time() - start_time >= 5:
                     break
 
                 time.sleep(0.2)
@@ -191,9 +192,10 @@ if __name__ =='__main__':
             #print(time.time() - start_time)
             if time.time() - start_time >= 20:
                 go_back()
+                make_switch()
 
             if time.time() - start_time >= 30:
-                make_switch()
+                pass
             
             # 여기서 20초 넘으면 설정 클릭하고 홈 눌러서 강제로 더받기 박스 띄우기
 
