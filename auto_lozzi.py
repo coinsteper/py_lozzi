@@ -12,6 +12,7 @@ img_more_box_g = r'C:\python\image_processing\auto_lozzi\img\more_box_g.png'
 img_more_box = r'C:\python\image_processing\auto_lozzi\img\more_box.png'
 img_more_box2 = r'C:\python\image_processing\auto_lozzi\img\more_box2.png'
 img_gold_box = r'C:\python\image_processing\auto_lozzi\img\goldbox.png'
+img_gold_box_open = r'C:\python\image_processing\auto_lozzi\img\goldbox_open.png'
 img_ok = r'C:\python\image_processing\auto_lozzi\img\ok.png'
 
 #img_x = r'C:\python\image_processing\auto_lozzi\img\x.png'
@@ -108,8 +109,18 @@ def make_screenshot():
     try:
         if not os.path.exists(path + '\\screenshot'):
             os.makedirs(path + '\\screenshot')
-            
-        pg.screenshot(filename, region=(left_g, top_g, width_g-200, height_g-50))
+
+        start_time = time.time()    
+        while True:
+            img = pg.locateOnScreen(img_gold_box_open, confidence=0.9, region=(left_g, top_g, width_g, height_g))
+            if img:
+                pg.screenshot(filename, region=(left_g, top_g, width_g-600, height_g-100))
+                break
+
+            if time.time() - start_time >= 5:
+                break
+            time.sleep(0.5)
+
     except Exception as e:
         print(e)
    
@@ -161,7 +172,7 @@ if __name__ =='__main__':
             find_and_click(img_more_box_g)            
             b_ret = find_and_click(img_gold_box)
             if b_ret:
-                time.sleep(1)
+                time.sleep(0.2)
                 make_screenshot()            
             find_and_click(img_ok)
             '''
