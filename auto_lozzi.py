@@ -14,6 +14,7 @@ img_more_box2 = r'C:\python\image_processing\auto_lozzi\img\more_box2.png'
 img_gold_box = r'C:\python\image_processing\auto_lozzi\img\goldbox.png'
 img_gold_box_open = r'C:\python\image_processing\auto_lozzi\img\goldbox_open.png'
 img_ok = r'C:\python\image_processing\auto_lozzi\img\ok.png'
+img_ok2 = r'C:\python\image_processing\auto_lozzi\img\ok2.png'
 
 #img_x = r'C:\python\image_processing\auto_lozzi\img\x.png'
 #img_x2 = r'C:\python\image_processing\auto_lozzi\img\x2.png'
@@ -31,6 +32,8 @@ img_skip1 = r'C:\python\image_processing\auto_lozzi\img\skip1.png'
 img_close = r'C:\python\image_processing\auto_lozzi\img\close.png'
 img_system = r'C:\python\image_processing\auto_lozzi\img\system.png'
 img_goback = r'C:\python\image_processing\auto_lozzi\img\goback.png'
+img_gosearch_google = r'C:\python\image_processing\auto_lozzi\img\search_google.png'
+img_control_in = r'C:\python\image_processing\auto_lozzi\img\control_in.png'
 
 img_x_list = os.listdir(img_path_x_list)
 
@@ -39,11 +42,29 @@ img_switch = r'C:\python\image_processing\auto_lozzi\img\switch.png'
 #ImageGrab.grab(bbox=None, include_layered_windows=True)
 
 tvwindow = pg.getWindowsWithTitle('Xiaomi_Mi A1_unknown - TeamViewer')
-left_g = tvwindow[0].left + 557
-top_g = tvwindow[0].top + 167
-width_g = tvwindow[0].width - 250
-height_g = tvwindow[0].height - 80
+left_g = tvwindow[0].left + 440
+top_g = tvwindow[0].top + 160
+width_g = tvwindow[0].width - 150
+height_g = tvwindow[0].height - 70
 start_time = time.time()
+
+
+def find_img(img, pos=0):
+    global start_time
+    Flag = False
+    confi = 0.92
+    
+    top_ = top_g
+    left_ = left_g
+    width_ = width_g
+    height_ = height_g
+
+    find_img = pg.locateOnScreen(img, confidence=confi, region=(left_, top_, width_, height_))
+    if find_img != None:
+        Flag = True
+
+    return Flag
+
 
 def find_and_click(img, pos=0):
     global start_time
@@ -97,6 +118,7 @@ def find_and_click(img, pos=0):
         start_time = time.time()
         Flag = True
 
+    #print(img)
     return Flag
 
 
@@ -155,7 +177,7 @@ def go_back():
     width_ = width_g
     height_ = height_g
     
-    pg.click(x=tvwindow[0].left + 885, y=tvwindow[0].top + 479, clicks=1, duration=0.1)
+    pg.click(x=tvwindow[0].left + 645, y=tvwindow[0].top + 336, clicks=1, duration=0.1)
     time.sleep(1)
 
     find_img = pg.locateOnScreen(img_goback, confidence=confi, region=(left_, top_, width_, height_))
@@ -175,6 +197,7 @@ if __name__ =='__main__':
                 time.sleep(0.2)
                 make_screenshot()            
             find_and_click(img_ok)
+            find_and_click(img_ok2)
             '''
             find_and_click(img_x)
             find_and_click(img_x2)
@@ -196,14 +219,19 @@ if __name__ =='__main__':
             #find_and_click(img_skip1, 1)            
             find_and_click(img_close, 3)
 
+            
+            if find_img(img_gosearch_google) or find_img(img_control_in):
+                go_back()
+
             '''
             for i in img_list:
                 find_and_click(i)
             '''
             #print(time.time() - start_time)
-            if time.time() - start_time >= 20:
-                go_back()
+            if time.time() - start_time >= 20:                
                 make_switch()
+                go_back()
+                time.sleep(0.1)
 
             if time.time() - start_time >= 30:
                 pass
