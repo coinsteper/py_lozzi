@@ -33,6 +33,7 @@ img_close = r'C:\python\image_processing\auto_lozzi\img\close.png'
 img_system = r'C:\python\image_processing\auto_lozzi\img\system.png'
 img_goback = r'C:\python\image_processing\auto_lozzi\img\goback.png'
 img_gosearch_google = r'C:\python\image_processing\auto_lozzi\img\search_google.png'
+img_webb = r'C:\python\image_processing\auto_lozzi\img\webb.png'
 img_control_in = r'C:\python\image_processing\auto_lozzi\img\control_in.png'
 
 img_x_list = os.listdir(img_path_x_list)
@@ -41,7 +42,7 @@ img_control = r'C:\python\image_processing\auto_lozzi\img\control.png'
 img_switch = r'C:\python\image_processing\auto_lozzi\img\switch.png'
 #ImageGrab.grab(bbox=None, include_layered_windows=True)
 
-tvwindow = pg.getWindowsWithTitle('Xiaomi_Mi A1_unknown - TeamViewer')
+tvwindow = pg.getWindowsWithTitle('BlueStacks App Player')
 left_g = tvwindow[0].left + 440
 top_g = tvwindow[0].top + 160
 width_g = tvwindow[0].width - 150
@@ -134,9 +135,9 @@ def make_screenshot():
 
         start_time = time.time()    
         while True:
-            img = pg.locateOnScreen(img_gold_box_open, confidence=0.9, region=(left_g, top_g, width_g, height_g))
-            if img:
-                pg.screenshot(filename, region=(left_g, top_g, width_g-600, height_g-100))
+            img = pg.locateOnScreen(img_gold_box_open, confidence=0.9, region=(left_g, top_g, width_g, height_g))            
+            if img:                
+                ret = pg.screenshot(filename, region=(left_g, top_g, width_g-300, height_g-120))            
                 break
 
             if time.time() - start_time >= 5:
@@ -220,7 +221,7 @@ if __name__ =='__main__':
             find_and_click(img_close, 3)
 
             
-            if find_img(img_gosearch_google) or find_img(img_control_in):
+            if find_img(img_gosearch_google) or find_img(img_control_in) or find_img(img_webb):
                 go_back()
 
             '''
